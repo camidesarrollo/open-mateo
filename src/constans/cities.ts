@@ -87,4 +87,4 @@ export const CITIES: readonly City[] = [
   { id: 'casablanca', name: 'Casablanca', latitude: 33.5731, longitude: -7.5898, timezone: 'Africa/Casablanca' },
 ] as const;
 
-export const DEFAULT_CITY = CITIES[0]; // Madrid
+export const DEFAULT_CITY = CITIES.find((c) => c.id === 'santiago')!; // Santiago de Chile

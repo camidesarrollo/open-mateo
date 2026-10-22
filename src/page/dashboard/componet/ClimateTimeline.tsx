@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { getOffsetLabel, hoyISO } from '../../../helper/time';
+import { getOffsetLabel } from '../../../helper/time';
 import type { WeatherDay } from '../../../types/weather';
 import { computeAnomalies } from '../../../utils/anomalies';
 import { DayCapsule } from './DayCapsule';
@@ -12,6 +12,8 @@ interface ClimateTimelineProps {
   datos: ParametroDatos;
   weatherDay: WeatherDay[];
   loading: boolean;
+  /** "Hoy" en la zona horaria de la ciudad */
+  today: string;
   filters: TimelineFilters;
   onFiltersChange: (next: TimelineFilters) => void;
 }
@@ -20,6 +22,7 @@ export const ClimateTimeline = ({
   datos,
   weatherDay,
   loading,
+  today,
   filters,
   onFiltersChange,
 }: ClimateTimelineProps) => {
@@ -82,6 +85,7 @@ export const ClimateTimeline = ({
               dates={weatherDay.map((d) => d.date)}
               value={filters.dateRange}
               onChange={(dateRange) => onFiltersChange({ ...filters, dateRange })}
+              today={today}
             />
             <Button
               variant="subtle"
@@ -139,8 +143,8 @@ export const ClimateTimeline = ({
                 key={day.date}
                 day={day}
                 anomaly={anomalies.byDate[day.date]}
-                isToday={day.date === hoyISO}
-                offsetLabel={getOffsetLabel(day.date, hoyISO)}
+                isToday={day.date === today}
+                offsetLabel={getOffsetLabel(day.date, today)}
               />
             ))}
           </div>

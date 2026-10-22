@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Popover } from "../../../components/ui/Popover";
 import { Icon } from "../../../components/ui/Icon";
 import { cn, focusRing } from "../../../components/ui/utils";
-import { addDays, formatDay, hoyISO } from "../../../helper/time";
+import { addDays, formatDay } from "../../../helper/time";
 import type { DateRange } from "../../../utils/filters";
 
 const WEEKDAYS = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
@@ -18,9 +18,11 @@ interface DateFilterProps {
     dates: string[];
     value: DateRange | null;
     onChange: (next: DateRange | null) => void;
+    /** "Hoy" en la zona horaria de la ciudad */
+    today: string;
 }
 
-export function DateFilter({ dates, value, onChange }: DateFilterProps) {
+export function DateFilter({ dates, value, onChange, today }: DateFilterProps) {
     const [open, setOpen] = useState(false);
     // Primer clic del rango, a la espera del segundo
     const [pendingStart, setPendingStart] = useState<string | null>(null);
@@ -56,9 +58,9 @@ export function DateFilter({ dates, value, onChange }: DateFilterProps) {
 
     const presets: { label: string; range: DateRange | null }[] = [
         { label: 'Todas', range: null },
-        { label: 'Pasadas', range: [first, addDays(hoyISO, -1)] },
-        { label: 'Hoy', range: [hoyISO, hoyISO] },
-        { label: 'Próximas', range: [addDays(hoyISO, 1), last] },
+        { label: 'Pasadas', range: [first, addDays(today, -1)] },
+        { label: 'Hoy', range: [today, today] },
+        { label: 'Próximas', range: [addDays(today, 1), last] },
     ];
 
     return (
@@ -121,7 +123,7 @@ export function DateFilter({ dates, value, onChange }: DateFilterProps) {
                             const isEdge = value !== null && (date === value[0] || date === value[1]);
                             const inRange = value !== null && date >= value[0] && date <= value[1];
                             const isPending = date === pendingStart;
-                            const isToday = date === hoyISO;
+                            const isToday = date === today;
 
                             return (
                                 <button

@@ -5,11 +5,10 @@ export const formatDay = (iso: string) =>
   }).replace('.', ''); // quita el punto de "oct."
 
 
-// 1) "Hoy" como string ISO (YYYY-MM-DD)
+// 1) "Hoy" como string ISO (YYYY-MM-DD) en la zona horaria de la ciudad
 //    Usamos Intl para respetar la TZ de la ciudad, no la del usuario
-export const hoyISO = new Intl.DateTimeFormat('en-CA', {
-    timeZone: 'America/Santiago', // vendrá de la ciudad seleccionada
-  }).format(new Date()); // "2026-10-22"
+export const todayIn = (timeZone: string) =>
+  new Intl.DateTimeFormat('en-CA', { timeZone }).format(new Date()); // "2026-10-22"
 
 // 2) Helper para sumar/restar días sin bugs de DST
 export const addDays = (iso: string, n: number) => {
