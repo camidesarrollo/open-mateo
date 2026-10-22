@@ -2,6 +2,9 @@ import { memo } from 'react';
 import { classifyWeather } from '../../../utils/weatherClassification';
 import type { DayAnomaly, WeatherDay } from '../../../types/weather';
 import { formatDay } from '../../../helper/time';
+import { Card, type CardVariant } from '../../../components/ui/Card';
+// ⚠️ Ajusta esta ruta si tu Card.tsx está en otro lugar.
+//    Regla: cuenta los ../ desde donde está ESTE archivo hasta Card.tsx.
 
 export interface DayCapsuleProps {
   /** Jornada normalizada. Referencia estable (viene de useMemo en App). */
@@ -12,10 +15,23 @@ export interface DayCapsuleProps {
   isToday: boolean;
   /** Etiqueta "-7d" / "HOY" / "+3d". Primitivo. */
   offsetLabel: string;
+  /** RF-02 — reservado para cuando llegue el reducer. */
+  investigated?: boolean;
+  /** RF-03 — reservado para cuando llegue la comparación. */
+  selected?: boolean;
+  /** Si existe, la cápsula es interactiva. Reservado para más adelante. */
+  onActivate?: (date: string) => void;
 }
 
-function DayCapsuleBase({ day, anomaly, isToday, offsetLabel }: DayCapsuleProps) {
-  // Derivado puro: se recalcula solo si la jornada cambia
+function DayCapsuleBase({
+  day,
+  anomaly,
+  isToday,
+  offsetLabel,
+  investigated = false,
+  selected = false,
+  onActivate,
+}: DayCapsuleProps) {
   const info = classifyWeather(
     day.weatherCode,
     day.windSpeedMax,
@@ -24,21 +40,34 @@ function DayCapsuleBase({ day, anomaly, isToday, offsetLabel }: DayCapsuleProps)
 
   const isAnomaly = anomaly?.isAnomaly ?? false;
 
+  // ─────────────────────────────────────────────
+  // Mapeo: estado visual → variante de Card
+  // ─────────────────────────────────────────────
+  const variant: CardVariant = isToday
+    ? 'highlight'
+    : isAnomaly
+      ? 'anomaly'
+      : 'default';
+
+  const interactive = Boolean(onActivate) && !isToday;
+
   return (
-    <article
+    <Card
+      id={`day-${day.date}`}
+      as={onActivate ? 'button' : 'article'}
+      variant={variant}
+      padding="sm"
+      interactive={interactive}
+      selected={selected}
+      onClick={onActivate ? () => onActivate(day.date) : undefined}
       aria-label={
         `Jornada del ${formatDay(day.date)}` +
         (isToday ? ', hoy' : '') +
-        (isAnomaly ? ', anomalía térmica' : '')
+        (isAnomaly ? ', anomalía térmica' : '') +
+        (investigated ? ', investigada' : '') +
+        (selected ? ', seleccionada para comparar' : '')
       }
-      className={[
-        'p-space-sm rounded-xl flex flex-col justify-between gap-2',
-        isToday
-          ? 'bg-surface-bright shadow-xl bg-gradient-to-b from-primary/25 via-surface-bright to-tertiary/15 relative'
-          : isAnomaly
-            ? 'bg-surface-container-high shadow-md border-l-4 border-error'
-            : 'bg-surface-container shadow-sm hover:bg-surface-container-high transition-colors',
-      ].join(' ')}
+      className="flex flex-col justify-between gap-2"
     >
       {/* Cabecera: fecha + offset */}
       <div className="flex items-center justify-between">
@@ -103,16 +132,27 @@ function DayCapsuleBase({ day, anomaly, isToday, offsetLabel }: DayCapsuleProps)
         </div>
       </div>
 
-      {/* Badge de estado: anomalía o normal */}
+      {/* Badge de estado: investigado > anomalía > normal/previsto */}
       <div className="w-full flex justify-center">
-        {isAnomaly && anomaly?.z != null ? (
+        {investigated ? (
+          <span
+            className="font-mono-badge text-[10px] text-secondary bg-surface-container-highest px-1.5 py-0.5 rounded flex items-center justify-center gap-0.5 w-full"
+            aria-label="Jornada ya investigada"
+          >
+            <span
+              className="material-symbols-outlined text-[12px]"
+              aria-hidden="true"
+            >
+              check_circle
+            </span>
+            Investigado
+          </span>
+        ) : isAnomaly && anomaly?.z != null ? (
           <span
             className="bg-error-container text-on-error-container font-mono-badge text-[10px] px-1.5 py-0.5 rounded flex items-center justify-center gap-1 w-full"
-            aria-label={
-              `Anomalía de temperatura: valor ${
-                anomaly.direction === 'above' ? 'superior' : 'inferior'
-              } a la media por ${anomaly.z.toFixed(1)} desviaciones estándar`
-            }
+            aria-label={`Anomalía de temperatura: valor ${
+              anomaly.direction === 'above' ? 'superior' : 'inferior'
+            } a la media por ${anomaly.z.toFixed(1)} desviaciones estándar`}
           >
             <span
               className="material-symbols-outlined text-[12px]"
@@ -130,16 +170,9 @@ function DayCapsuleBase({ day, anomaly, isToday, offsetLabel }: DayCapsuleProps)
           </span>
         )}
       </div>
-    </article>
+    </Card>
   );
 }
 
-/**
- * memo con comparación por defecto (shallow).
- * Funciona bien porque TODAS las props son primitivas o referencias estables
- * (day y anomaly vienen de useMemo en el padre).
- */
 export const DayCapsule = memo(DayCapsuleBase);
-
-// Ayuda a DevTools a mostrar el nombre correcto
 DayCapsule.displayName = 'DayCapsule';

@@ -19,6 +19,7 @@ export { Pagination, type PaginationProps } from './Pagination';
 export { Panel, type PanelProps } from './Panel';
 export { Popover, type PopoverProps } from './Popover';
 export { ProgressBar, type ProgressBarProps } from './ProgressBar';
+export { RangeSlider, type RangeSliderProps, type RangeValue } from './RangeSlider';
 export { ScrollSpy, type ScrollSpyProps, type ScrollSpySection } from './ScrollSpy';
 export { SectionHeader, type SectionHeaderProps } from './SectionHeader';
 export { SegmentMeter, type SegmentMeterProps } from './SegmentMeter';

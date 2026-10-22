@@ -2,7 +2,7 @@ import type { ElementType, HTMLAttributes, ReactNode } from 'react';
 import { Icon } from './Icon';
 import { cn, textTone, type Tone } from './utils';
 
-export type CardVariant = 'default' | 'low' | 'lowest' | 'highlight' | 'error';
+export type CardVariant = 'default' | 'low' | 'lowest' | 'highlight' | 'error' | 'anomaly';
 export type CardPadding = 'none' | 'sm' | 'md';
 
 const variantClasses: Record<CardVariant, string> = {
@@ -13,6 +13,8 @@ const variantClasses: Record<CardVariant, string> = {
   highlight: 'bg-surface-bright bg-gradient-to-b from-primary/25 via-surface-bright to-tertiary/15 shadow-xl',
   // Cápsula con fallo de telemetría
   error: 'bg-error-container/20 text-error shadow-sm',
+  // Cápsula con anomalía térmica
+  anomaly: 'bg-surface-container-high shadow-md border-l-4 border-error',
 };
 
 const hoverClasses: Record<CardVariant, string> = {
@@ -21,6 +23,7 @@ const hoverClasses: Record<CardVariant, string> = {
   lowest: 'hover:bg-surface-container-low',
   highlight: '',
   error: '',
+  anomaly: 'hover:bg-surface-container-highest',   // ← AÑADIR
 };
 
 const paddingClasses: Record<CardPadding, string> = {

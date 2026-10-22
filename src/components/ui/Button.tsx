@@ -8,11 +8,12 @@ export type ButtonVariant =
   | 'tonal' // "Cuaderno hipótesis", "Exportar cotejo"
   | 'secondary' // "Exportar CSV", "Descargar expediente"
   | 'subtle' // "Compacta", botón de orden
-  | 'ghost' // iconos de la cabecera, "Restablecer"
+  | 'ghost' // iconos de la cabecera
+  | 'quiet' // "Restablecer" filtros
   | 'accent' // "Comparar [A / B]"
   | 'danger'; // "Reintentar"
 
-export type ButtonSize = 'sm' | 'md' | 'lg';
+export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary: 'bg-primary text-on-primary font-semibold shadow-sm hover:bg-primary-container hover:text-on-primary-container',
@@ -20,19 +21,21 @@ const variantClasses: Record<ButtonVariant, string> = {
   secondary: 'bg-surface-container-high text-on-surface hover:bg-surface-container-highest',
   subtle: 'bg-surface-container text-on-surface hover:bg-surface-container-high',
   ghost: 'text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface',
+  quiet: 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface',
   accent: 'bg-surface-container-high text-secondary hover:bg-surface-container-highest',
   danger: 'bg-error-container text-on-error-container hover:bg-error hover:text-on-error',
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
+  xs: 'p-1.5 gap-1 font-label-sm text-label-sm', // "Restablecer"
   sm: 'px-space-sm py-1 gap-1 font-label-sm text-label-sm',
   md: 'px-space-sm py-1.5 gap-1.5 font-label-md text-label-md',
   lg: 'px-space-md py-2.5 gap-2 font-label-md text-label-md',
 };
 
-const iconOnlyClasses: Record<ButtonSize, string> = { sm: 'w-7 h-7', md: 'w-8 h-8', lg: 'w-9 h-9' };
-const iconSize: Record<ButtonSize, number> = { sm: 15, md: 16, lg: 18 };
-const iconOnlySize: Record<ButtonSize, number> = { sm: 18, md: 18, lg: 20 };
+const iconOnlyClasses: Record<ButtonSize, string> = { xs: 'w-7 h-7', sm: 'w-7 h-7', md: 'w-8 h-8', lg: 'w-9 h-9' };
+const iconSize: Record<ButtonSize, number> = { xs: 16, sm: 15, md: 16, lg: 18 };
+const iconOnlySize: Record<ButtonSize, number> = { xs: 16, sm: 18, md: 18, lg: 20 };
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
