@@ -1,0 +1,226 @@
+@import "tailwindcss";
+
+/* Activar dark mode mediante la clase .dark */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* =========================================
+   PALETA DE COLORES
+   ========================================= */
+
+@theme {
+  --color-on-tertiary-fixed: #21005e;
+  --color-tertiary-fixed: #e8ddff;
+  --color-on-primary-fixed: #001c39;
+  --color-inverse-surface: #d4e4fa;
+  --color-primary-container: #60a5fa;
+  --color-error: #ffb4ab;
+  --color-on-background: #d4e4fa;
+  --color-on-surface: #d4e4fa;
+  --color-surface-dim: #051424;
+  --color-on-primary-container: #003a6b;
+  --color-on-tertiary-fixed-variant: #4f319c;
+  --color-tertiary: #cebdff;
+  --color-surface-variant: #273647;
+  --color-inverse-primary: #0060ac;
+  --color-secondary-fixed: #62fae3;
+  --color-on-primary-fixed-variant: #004883;
+  --color-on-primary: #00315d;
+  --color-outline: #8b919d;
+  --color-surface-container-high: #1c2b3c;
+  --color-surface: #051424;
+  --color-outline-variant: #414751;
+  --color-primary: #a4c9ff;
+  --color-on-secondary-fixed: #00201c;
+  --color-tertiary-container: #ad91ff;
+  --color-secondary: #44e2cd;
+  --color-primary-fixed: #d4e3ff;
+  --color-inverse-on-surface: #233143;
+  --color-surface-bright: #2c3a4c;
+  --color-surface-tint: #a4c9ff;
+  --color-surface-container-highest: #273647;
+  --color-tertiary-fixed-dim: #cebdff;
+  --color-on-surface-variant: #c1c7d3;
+  --color-error-container: #93000a;
+  --color-primary-fixed-dim: #a4c9ff;
+  --color-background: #051424;
+  --color-surface-container-low: #0d1c2d;
+  --color-on-secondary: #003731;
+  --color-on-error-container: #ffdad6;
+  --color-secondary-fixed-dim: #3cddc7;
+  --color-on-secondary-fixed-variant: #005047;
+  --color-on-tertiary-container: #40208d;
+  --color-surface-container: #122131;
+  --color-on-tertiary: #381385;
+  --color-on-error: #690005;
+  --color-surface-container-lowest: #010f1f;
+  --color-secondary-container: #03c6b2;
+  --color-on-secondary-container: #004d44;
+
+  /* =========================================
+     BORDES REDONDEADOS
+     ========================================= */
+
+  --radius-default: 0.25rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+
+  /* =========================================
+     ESPACIADO
+     ========================================= */
+
+  --spacing-space-lg: 1.5rem;
+  --spacing-space-md: 1rem;
+  --spacing-space-xs: 0.25rem;
+  --spacing-space-xl: 2rem;
+  --spacing-gutter: 1rem;
+  --spacing-margin-mobile: 0.75rem;
+  --spacing-margin: 1.5rem;
+  --spacing-gutter-mobile: 0.5rem;
+  --spacing-space-sm: 0.5rem;
+
+  /* =========================================
+     TIPOGRAFÍAS
+     ========================================= */
+
+  --font-mono-data: "JetBrains Mono", monospace;
+  --font-mono-badge: "JetBrains Mono", monospace;
+
+  --font-label-md: "Inter", sans-serif;
+  --font-body-md: "Inter", sans-serif;
+  --font-headline-xl: "Inter", sans-serif;
+  --font-headline-xl-mobile: "Inter", sans-serif;
+  --font-telemetry-metric: "Inter", sans-serif;
+  --font-headline-md: "Inter", sans-serif;
+  --font-body-lg: "Inter", sans-serif;
+  --font-headline-lg: "Inter", sans-serif;
+  --font-label-sm: "Inter", sans-serif;
+
+  /* =========================================
+     TAMAÑOS DE TEXTO PERSONALIZADOS
+     ========================================= */
+
+  --text-mono-data: 12px;
+  --text-mono-data--line-height: 16px;
+  --text-mono-data--letter-spacing: -0.02em;
+  --text-mono-data--font-weight: 400;
+
+  --text-label-md: 12px;
+  --text-label-md--line-height: 16px;
+  --text-label-md--letter-spacing: 0.02em;
+  --text-label-md--font-weight: 500;
+
+  --text-body-md: 13px;
+  --text-body-md--line-height: 18px;
+  --text-body-md--font-weight: 400;
+
+  --text-mono-badge: 11px;
+  --text-mono-badge--line-height: 14px;
+  --text-mono-badge--font-weight: 500;
+
+  --text-headline-xl: 32px;
+  --text-headline-xl--line-height: 40px;
+  --text-headline-xl--letter-spacing: -0.03em;
+  --text-headline-xl--font-weight: 600;
+
+  --text-headline-xl-mobile: 24px;
+  --text-headline-xl-mobile--line-height: 32px;
+  --text-headline-xl-mobile--letter-spacing: -0.02em;
+  --text-headline-xl-mobile--font-weight: 600;
+
+  --text-telemetry-metric: 28px;
+  --text-telemetry-metric--line-height: 32px;
+  --text-telemetry-metric--letter-spacing: -0.03em;
+  --text-telemetry-metric--font-weight: 600;
+
+  --text-headline-md: 18px;
+  --text-headline-md--line-height: 24px;
+  --text-headline-md--letter-spacing: -0.01em;
+  --text-headline-md--font-weight: 500;
+
+  --text-body-lg: 15px;
+  --text-body-lg--line-height: 22px;
+  --text-body-lg--letter-spacing: -0.01em;
+  --text-body-lg--font-weight: 400;
+
+  --text-headline-lg: 24px;
+  --text-headline-lg--line-height: 32px;
+  --text-headline-lg--letter-spacing: -0.02em;
+  --text-headline-lg--font-weight: 600;
+
+  --text-label-sm: 11px;
+  --text-label-sm--line-height: 14px;
+  --text-label-sm--letter-spacing: 0.04em;
+  --text-label-sm--font-weight: 600;
+
+  /* =========================================
+     SOMBRAS (valores de Tailwind v3)
+     En v4 shadow-sm equivale al antiguo "shadow"
+     ========================================= */
+
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+
+/* =========================================
+   COMPATIBILIDAD CON TAILWIND v3 (preflight)
+   ========================================= */
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: #e5e7eb;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #9ca3af;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+/* =========================================
+   ESTILOS GLOBALES
+   ========================================= */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  background-color: #051424;
+  color: #d4e4fa;
+  font-family: "Inter", sans-serif;
+  overscroll-behavior: none;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+main > :first-child {
+  margin-top: 0 !important;
+}
+
+main > :last-child {
+  margin-bottom: 0 !important;
+}
+
+/* Ocultar scrollbar sin deshabilitar el desplazamiento */
+::-webkit-scrollbar {
+  display: none;
+}
+
+html {
+  scrollbar-width: none;
+}
