@@ -3,6 +3,9 @@
 /* Activar dark mode mediante la clase .dark */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Clases que <Grid> arma dinámicamente (Tailwind no las detecta en el código) */
+@source inline("{sm:,md:,lg:,xl:,}{grid-cols,col-span}-{1,2,3,4,5,6,7,8,9,10,11,12}");
+
 /* =========================================
    PALETA DE COLORES
    ========================================= */
@@ -160,6 +163,9 @@
 
   --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+
+  /* Superficie nivel 2 (menús, tooltips, modales) — README "Elevation & Depth" */
+  --shadow-elevated: 0 4px 20px -2px rgb(2 6 23 / 0.7), 0 0 0 1px rgb(255 255 255 / 0.12);
 }
 
 /* =========================================
@@ -201,6 +207,8 @@ body {
   background-color: #051424;
   color: #d4e4fa;
   font-family: "Inter", sans-serif;
+  /* Cifras tabulares para telemetría — README "Typography" */
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11", "tnum";
   overscroll-behavior: none;
 }
 
